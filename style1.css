@@ -1,0 +1,39 @@
+.container-fluid{
+    padding: 3px;
+}
+.container{
+    margin-top: 5%;
+}
+#launch{
+padding-left: 15px;
+}
+#navbarNav{
+padding: 3px;
+}
+#launch{
+padding-left: 15px;
+}
+p{
+    width: 70%;
+}
+.fluid-container{
+margin-top: 8%;
+}
+#image{
+    border-width: 10px;
+    border-style: solid;
+    border-color:rgba(128, 128, 128, 0.258);
+}
+/* .fluid-container row{
+    padding-left: 5%;
+    padding-top: 5%;
+} */
+ .row{
+    padding-left: 50px;
+    padding-top: 50px;
+ }
+ #image2{
+    border-width: 10px;
+    border-style: solid;
+    border-color:rgba(128, 128, 128, 0.258); 
+ }

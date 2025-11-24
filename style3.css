@@ -1,0 +1,56 @@
+.container{
+    margin-top: 5%;
+}
+.container-fluid{
+    padding: 3px;
+}
+#navbarNav{
+padding: 3px;
+}
+#launch{
+padding-left: 15px;
+}
+/* p{
+    width: 70%;
+} */
+.fluid-container{
+margin-top: 8%;
+}
+    .chart-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      margin: auto;
+    }
+
+    .donut-chart {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Each slice: color + white gap + black border */
+    .slice {
+      stroke: rgba(112, 128, 144, 0.646);       /* creates gap between slices */
+      stroke-width: 5;     /* adjust gap size */
+    }
+
+    .red    { fill: red; }
+    .blue   { fill: blue; }
+    .green  { fill: green; }
+    .orange { fill: orange; }
+    .purple { fill: purple; }
+    .yellow { fill: yellow; }
+
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+    }
+     #one{
+        padding-top: 10px;
+    }
+
