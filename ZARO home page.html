@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OUR PROJECT — Hero + 3D Wheel</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+
+
+/* -------------------------
+   Mobile-friendly / Responsive CSS
+   Replace your existing <style> with this block
+   ------------------------- */
+
+/* Mobile-first variables */
+:root{
+  --bg:#050507;
+  --card-w:200px;
+  --card-h:300px;
+  --radius: 320px;
+  --lift: 90px;
+  --max-page-width:1500px;
+}
+
+/* Reset & base */
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+body{
+  background-color: #000;
+  color: #fff;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Montserrat", sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.4;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* links */
+a { text-decoration:none; color:inherit; }
+
+/* ---------- Top sliding bar (small) ---------- */
+.top-bar {
+  background: #000;
+  color: #fff;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  position: relative;
+  z-index: 99998;
+  padding: 0 8px;
+}
+.top-bar p {
+  position: absolute;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  white-space:nowrap;
+}
+.top-bar p.active { opacity: 1; transform: translateX(0); }
+.top-bar p.exit { opacity: 0; transform: translateX(-100%); }
+
+/* ---------- Header / Navbar ---------- */
+.container-page { max-width:var(--max-page-width); margin: 0 auto; padding: 0 12px; }
+
+.fade-element { opacity:0; transform: translateY(10px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-element.showing { opacity:1; transform: translateY(0); }
+
+.navbar {
+  background-color: #000;
+  animation: fadeNavbar 0.8s ease forwards;
+  z-index:99999;
+  padding: 12px 0;
+}
+@keyframes fadeNavbar {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Brand */
+.brand-text {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+  margin:0;
+}
+.brand-text:hover { color: #0d6efd; }
+.brand-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 3px;
+  background-color: #0d6efd;
+  transition: width 0.3s ease-in-out;
+}
+.brand-text:hover::after { width: 100%; }
+
+/* Navbar behavior */
+.navbar-toggler { border:none; padding:.25rem .6rem; }
+.navbar-toggler-icon { filter: invert(1); }
+
+/* Dropdowns (desktop feel but accessible on touch) */
+.dropdown-menu {
+  display:block;
+  opacity:0;
+  transform: translateY(12px) scale(.98);
+  visibility:hidden;
+  transition: all .28s ease;
+  border-radius: 10px;
+  padding:8px;
+  background:#000;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.nav-item.dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform: translateY(0) scale(1); }
+.dropdown-item { color:#fff; border-radius:8px; padding:8px 12px; opacity:0; transform: translateX(-6px); transition: all .2s ease; }
+.nav-item.dropdown:hover .dropdown-item { opacity:1; transform: translateX(0); }
+.dropdown-item:hover { background:#0d6efd; color:#fff; transform: translateX(4px); }
+
+/* Top link small */
+.top-link { color:#fff; font-size:.9rem; transition:color .2s ease, opacity .4s ease; opacity:0; animation: fadeTopLinks 1s ease forwards; }
+@keyframes fadeTopLinks { from{opacity:0} to{opacity:1} }
+.top-link:hover { color:#0d6efd; }
+
+/* ---------- Hero / Video / Center images ---------- */
+.hero-section {
+  background-image: url("https://images.unsplash.com/photo-1484950763426-56b5bf172dbb?w=1200&auto=format&fit=crop&q=60&ixlib=rb-4.1.0");
+  background-position: center;
+  background-size: cover;
+  height: 62vh;
+  position: relative;
+  padding: 28px 8px;
+  border-radius: 12px;
+  color: white;
+  backdrop-filter: brightness(0.8);
+  margin: 12px 0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+/*.hero-section h1 { font-size: clamp(1.7rem, 10vw, 2.1rem); font-weight:1000; margin-bottom:8px; line-height:1.3; }*/
+.hero-section p { font-size: clamp(.85rem, 3.2vw, .98rem); max-width:700px; margin-top:8px; }
+
+/* gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, #0d6efd, #00d4ff, #00ffaa);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.text-fade { opacity:0; transform:translateY(10px); animation: textFadeIn 0.9s ease forwards; }
+@keyframes textFadeIn { to{ opacity:1; transform:translateY(0);} }
+
+/* Video */
+.video-wrapper { display:flex; justify-content:center; width:100%; margin-top:18px; margin-bottom:22px; }
+.video-container {
+  position:relative;
+  width:100%;
+  max-width:920px;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 16px 48px rgba(0,0,0,0.6);
+  transition: transform .28s ease;
+}
+.video-container:hover { transform: scale(1.01); }
+.video-element {
+  width:100%;
+  height:auto;
+  object-fit:cover;
+  border-radius:12px;
+  background:#000;
+  cursor:pointer;
+  aspect-ratio: 16/9;
+}
+
+
+    .video-anim { opacity:0; transform: rotateX(90deg); transition: opacity .8s ease-out, transform 1s ease-out; transform-origin:top; }
+    .video-anim.show { opacity:1; transform: rotateX(0deg); }
+
+    .play-overlay {
+      position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+      background: rgba(0,0,0,0.6); width:90px; height:90px; border-radius:50%;
+      display:flex; justify-content:center; align-items:center; cursor:pointer; z-index:10;
+      transition: all .3s ease;
+    }
+    .play-overlay i { font-size:50px; color:#fff; }
+    .play-overlay:hover { background: rgba(13,110,253,0.9); transform: translate(-50%,-50%) scale(1.1); }
+    .play-overlay.hide { opacity:0; pointer-events:none; transition: opacity .4s ease; }
+
+    .glow-text {
+      color:#ffffff;
+      text-shadow:
+        0 0 10px #0d6efd,
+        0 0 20px #0d6efd,
+        0 0 30px #0d6efd;
+    }
+
+/* Play overlay */
+.play-overlay {
+  position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+  background: rgba(0,0,0,0.6); width:84px; height:84px; border-radius:50%;
+  display:flex; justify-content:center; align-items:center; cursor:pointer; z-index:10;
+  transition: all .25s ease;
+}
+.play-overlay i { font-size:44px; color:#fff; }
+
+/* promo text */
+.glow-text {
+  color:#ffffff;
+  text-shadow:
+    0 0 10px #0d6efd,
+    0 0 20px #0d6efd,
+    0 0 30px #0d6efd;
+}
+
+/* ---------- Background wrapper / center images ---------- */
+.background-wrapper { position:relative; height:auto; margin-top:24px; padding: 10px 0 28px; }
+.split-color1 { background-color: rgba(0,0,255,0.726); height:0vh; }
+.split-color2 { background: black; height:10vh; }
+.center-image {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  object-fit:cover;
+  border-radius:12px;
+  position:relative;
+  left:0;
+  transform: none;
+  box-shadow:0 18px 40px rgba(0,0,0,0.35);
+  transition: transform .6s ease-out;
+  display:block;
+  margin-bottom: 100px;
+}
+.center-image.show-effect { transform: scale(1.05); }
+.center-image::after { display:none; } /* hide sheen for stability on small devices */
+
+/* ---------- Wheel (3D card arc) ---------- */
+.wheel-section {
+  background: linear-gradient(180deg, rgba(5,5,7,1), rgba(10,10,12,1));
+  padding: 28px 0 80px;
+  margin-top: 10px;
+}
+
+/* entrance */
+.wheel-section { opacity: 0; transform: translateY(40px); transition: opacity .6s ease-out, transform .6s ease-out; }
+.wheel-section.visible { opacity: 1; transform: translateY(0); }
+
+/* viewport */
+.viewport {
+  width:100%;
+  max-width:calc(var(--max-page-width) - 24px);
+  height: clamp(300px, 44vh, 640px);
+  margin: 0 auto;
+  position: relative;
+  perspective:1400px;
+  user-select:none;
+  touch-action: pan-y; /* allow vertical scrolling but still enable horizontal dragging on the wheel */
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
+/* track */
+.track {
+  width:100%;
+  height:100%;
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+.track.grabbing { cursor:grabbing; }
+
+/* card default (will be positioned via JS) */
+.card {
+  width: var(--card-w);
+  height: var(--card-h);
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform-style: preserve-3d;
+  border-radius:12px;
+  overflow:hidden;
+  background:#111;
+  box-shadow:0 14px 44px rgba(0,0,0,0.6);
+  transition: box-shadow .12s, transform .12s, opacity .18s;
+  opacity:0;
+}
+.card.show { opacity:1; }
+
+/* card content */
+.card img { width:100%; height:48%; object-fit:cover; pointer-events:none; display:block; }
+.meta { color:white; padding:12px; font-size:14px; line-height:1.25; }
+.front { border-color: rgba(255,255,255,0.16); box-shadow:0 28px 90px rgba(0,0,0,0.7); }
+
+/* dots */
+.wheel-dots { display:flex; justify-content:center; gap:10px; padding: 10px; }
+.dot { width:12px; height:12px; background:#888; border-radius:50%; opacity:.45; transition: all .28s ease; }
+.dot.active { background:#fff; opacity:1; transform: scale(1.35); box-shadow:0 0 10px #fff; }
+
+/* touch hint: larger touch targets on small screens */
+@media (max-width: 900px) {
+  :root {
+    --card-w: 180px;
+    --card-h: 260px;
+    --radius: 300px;
+    --lift: 84px;
+  }
+
+  .brand-text { font-size:1rem; }
+  .navbar { padding:10px 0; }
+
+  /*.hero-section { height: 60vh; padding: 22px 10px; border-radius:10px; }
+  .hero-section h1 { font-size: clamp(1.1rem, 7vw, 1.9rem); }
+  .hero-section p { font-size: .95rem; }*/
+
+  .video-container { border-radius:12px; }
+  .video-element { aspect-ratio: 16/9; max-height: 320px; }
+
+  .center-image { max-height: 48vh; border-radius:10px; }
+
+  .viewport { height: clamp(300px, 44vh, 520px); perspective:1200px; }
+  .card { border-radius:12px; }
+
+  .meta button, .meta a > button { min-height:44px; font-size:14px; }
+
+  .wheel-dots { gap:12px; }
+  .dot { width:14px; height:14px; }
+}
+
+/* small phones */
+@media (max-width: 420px) {
+  :root {
+    --card-w: 150px;
+    --card-h: 230px;
+    --radius: 240px;
+    --lift: 64px;
+  }
+
+  .top-bar { height:30px; font-size:12px; }
+  .brand-text { font-size: .95rem; }
+  .navbar-brand img { width:36px; height:36px; }
+
+  .hero-section { height: 54vh; padding: 18px 8px; }
+  .hero-section h1 { font-size: clamp(1rem, 8vw, 1.5rem); }
+  .video-element { max-height: 220px; }
+
+  .viewport { height: clamp(260px, 40vh, 420px); perspective:1000px; }
+  .card { width: var(--card-w); height: var(--card-h); }
+  .card img { height:48%; }
+
+  .meta { font-size:13px; padding:10px; }
+  .price-row { gap:.45rem; font-size:0.85rem; }
+  .sale-price { font-size:.95rem; }
+
+  .wheel-dots { gap:10px; }
+  .dot { width:12px; height:12px; }
+}
+
+/* wide screens restore larger card sizes */
+@media (min-width: 1100px) {
+  :root {
+    --card-w:240px;
+    --card-h:340px;
+    --radius:420px;
+    --lift:130px;
+  }
+  .hero-section { height:110vh; padding: 40px; border-radius:15px; }
+  .center-image { max-width:1400px; }
+}
+
+/* Utility spacing & small tweaks */
+.bottom-spacer { height: 100px; }
+.price-row { display:inline-flex; align-items:center; gap:.6rem; font-family:inherit; }
+.original-price { text-decoration:line-through; color:#777; font-size:.78rem; }
+.sale-price { font-size:1rem; font-weight:700; color: rgb(7,222,7); background: linear-gradient(90deg, rgba(229,57,53,0.08), transparent); padding:.15rem .45rem; border-radius:6px; }
+.badge-off { font-size:.76rem; color:white; background:#ff7043; padding:.15rem .4rem; border-radius:12px; margin-left:.5rem; }
+
+/* Improve mobile touch & performance */
+.viewport, .track, .card, .video-container {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  touch-action: pan-y;
+  -webkit-user-select:none;
+  user-select:none;
+  cursor: grab;
+}
+
+
+/* Dropdown/menu colors on mobile */
+@media (max-width:900px){
+  .dropdown-menu { background:#07070a; }
+  .dropdown-item { color:#f7f7f7; }
+}
+
+/* Keep consistent nav margins */
+.navbar, .navbar * { margin-top:0 !important; margin-bottom:0 !important; }
+
+/* Small helper to visually center the "Exclusive Video Collection" header */
+.nav.mt-3.mx-4 { margin-top:18px !important; margin-bottom:6px !important; }
+
+
+/* Blue glow + underline animation */
+.nav h1 {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Blue underline (hidden by default) */
+.nav h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;   /* position of underline */
+  width: 0;
+  height: 3px;
+  background: #0d6efd; /* blue underline */
+  border-radius: 4px;
+  transition: width 0.35s ease-in-out;
+}
+
+/* Hover = blue glow + underline expands */
+.nav h1:hover {
+  color: #0d6efd; /* glowing blue color */
+  text-shadow:
+    0 0 8px #0d6efd,
+    0 0 15px rgba(13, 110, 253, 0.9),
+    0 0 25px rgba(13, 110, 253, 0.7),
+    0 0 35px rgba(13, 110, 253, 0.5),
+    0 0 45px rgba(13, 110, 253, 0.4);
+}
+
+/* Underline animation */
+.nav h1:hover::after {
+  width: 100%;
+}
+
+
+
+#about{
+  margin-top: 65vh;
+}
+
+/* Mobile – remove margin */
+@media (max-width: 768px) {
+  #about {
+    margin-top: 0 !important;
+  }
+}
+
+
+
+/* --- Card Style --- */
+body {
+  background: #000;
+}
+
+#aboutCard {
+  width: 360px;
+  max-width: calc(100% - 32px);
+  margin: 48px auto;
+  padding: 28px;
+  border-radius: 14px;
+
+  background: rgba(17,17,17,0.88);
+  color: #e8ffe9;
+  border: 1px solid rgba(102,255,105,0.06);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 18px rgba(102,255,105,0.06) inset;
+
+  transform: translateY(20px) scale(0.995);
+  opacity: 0;
+  transition: transform .6s cubic-bezier(.2,.9,.3,1), opacity .6s ease, box-shadow .4s ease;
+
+  position: relative;
+  z-index: 10;
+
+  /* 🎯 FIXES THE PAGE AUTO SCROLLING ISSUE */
+  will-change: transform, opacity;
+  min-height: 420px;
+}
+
+#aboutCard.animate {
+  animation: slideFlipIn 2.2s ease forwards,
+             glowPulse 3s infinite alternate 2.2s;
+}
+
+
+
+/* Slide + Flip Animation 
+@keyframes slideFlipIn {
+  0% {
+    transform: translateX(-150%) rotateY(90deg);
+    opacity: 0;
+  }
+  40% {
+    transform: translateX(0) rotateY(45deg);
+    opacity: 0.7;
+  }
+  70% {
+    transform: translateX(0) rotateY(-10deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotateY(0);
+    opacity: 1;
+  }
+}*/
+
+@keyframes slideFlipIn {
+  0% {
+    transform: translateX(-60px) rotateY(45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+
+/* Green Glow Animation */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 20px rgba(102, 255, 105, 0.4),
+                0 0 40px rgba(102, 255, 105, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 40px rgba(102, 255, 105, 0.6),
+                0 0 80px rgba(102, 255, 105, 0.3);
+  }
+}
+
+/* Profile Header */
+.profile-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.profile-header img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(102, 255, 105, 0.7);
+  box-shadow: 0 0 25px rgba(102, 255, 105, 0.824);
+  transition: 0.4s;
+}
+
+.profile-header img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(102, 255, 105, 0.7);
+}
+
+.profile-header h3 {
+  margin-top: 15px;
+  color: rgba(102, 255, 105, 0.9);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/* INFO LIST */
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.info-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 1rem;
+  color: #d9ffd9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.info-list li span:first-child {
+  color: #88ff9c;
+  font-weight: 600;
+}
+
+/* SOCIAL ICONS */
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 20px 0;
+}
+
+.social-links a {
+  font-size: 1.7rem;
+  color: #66ff7a;
+  margin: 0 12px;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  color: white;
+  text-shadow: 0 0 10px #00ff66;
+}
+
+/* CONTACT BUTTON */
+.btn-custom {
+  background: #00ff66;
+  color: #000;
+  font-weight: 700;
+  padding: 10px 28px;
+  border-radius: 50px;
+  border: none;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #00ff66;
+}
+
+.btn-custom:hover {
+  background: white;
+  color: black;
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px #00ff66;
+}
+
+
+
+</style>
+
+</head>
+<body>
+
+  <!-- Sliding short messages bar -->
+  <div class="top-bar">
+    <p class="active" style="color:white;">Festival Carnival Additional 10% Offer On Order Of rs:2499 or Above</p>
+    <p style="color:white;">Shop New Season</p>
+    <p style="color:white">FREE Shipping Above rs:1999</p>
+  </div>
+
+  <!-- Top Info Bar (secondary) -->
+  <div class="container-fluid text-light py-2 top-bar" style="background-color:black;">
+    <div class="row align-items-center p-2 container-page">
+      <div class="col-md-auto fade-element">
+        <i class="bi bi-geo-alt-fill me-2" style="color:#0d6efd;"></i>
+        <span class="fw-bold">Tamraght, Morocco</span>
+      </div>
+
+      <div class="col-md-auto fade-element">
+        <i class="bi bi-envelope-fill me-2" style="color:#0d6efd;"></i>
+        <a href="mailto:sujithakash2018@gmail.com" class="top-link fw-bold">sujithakash2018@gmail.com</a>
+      </div>
+
+      <div class="col-md-auto fade-element">
+        <i class="bi bi-telephone-fill me-2" style="color:#0d6efd;"></i>
+        <span class="fw-bold">+212 771357239</span>
+      </div>
+
+      <div class="col d-flex justify-content-center justify-content-md-end fade-element">
+        <a href="#" class="top-link me-3"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="top-link"><i class="bi bi-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg p-3">
+    <div class="container container-page">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="https://oussamasurfadventure.com/wp-content/uploads/2025/03/logo.png" width="50" height="50" class="me-2 fade-element" alt="logo">
+        <h1 class="brand-text m-0 fade-element">OUR PROJECT</h1>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown me-4 fade-element">
+            <a class="nav-link dropdown-toggle text-light" href="#">Videos</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Bigginers</a></li>
+              <li><a class="dropdown-item" href="#">Midium</a></li>
+              <li><a class="dropdown-item" href="#">Exclusive</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown me-4 fade-element">
+            <a class="nav-link dropdown-toggle text-light" href="#">Activities</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Beach Yoga</a></li>
+              <li><a class="dropdown-item" href="#">Stand-Up Paddle</a></li>
+              <li><a class="dropdown-item" href="#">Snorkeling</a></li>
+              <li><a class="dropdown-item" href="#">Excursions</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item me-4 fade-element"><a class="nav-link text-light" href="#">About Us</a></li>
+          <li class="nav-item me-4 fade-element"><a class="nav-link text-light" href="#">Upcoming</a></li>
+          <li class="nav-item me-4 fade-element"><a class="nav-link text-light" href="#">Announcements</a></li>
+          <li class="nav-item me-4 fade-element"><button type="button" class="btn btn-primary">Contact</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page content wrapper -->
+  <main class="container-page">
+
+    <!-- Hero -->
+    <section class="hero-section">
+      <h1 class="fw-bold display-5 gradient-text text-fade">Transform Your Skills with Expert Video Lessons</h1>
+      <h1 class="fw-bold gradient-text text-fade mt-3">Learn Smarter. Faster. Better.</h1>
+      <p class="mt-4 text-fade">Upgrade from normal YouTube watching to structured, high-quality premium lessons designed to save your time and boost your learning. Start your journey today.</p>
+    </section>
+
+    <!-- Premium Hybrid Video Section -->
+    <section class="video-wrapper bg-light">
+      <div class="video-container video-anim">
+        <video id="premiumVideo" class="video-element" poster="video/saipallavi.jpeg" playsinline>
+          <source src="video/4612176-uhd_4096_2160_25fps.mp4" type="video/mp4">
+        </video>
+
+        <div class="play-overlay" id="playOverlay"><i class="bi bi-play-fill"></i></div>
+      </div>
+    </section>
+
+    <!-- Side / Promo text -->
+    <section class="side-section text-center my-5">
+      <h3 class="fw-bold display-5 mb-3" style="color: white;">Every time you pay for</h3>
+      <h1 class="fw-bold display-2 mt-2 glow-text">Guaranteed Money making video</h1>
+    </section>
+
+    <!-- Background + Center Images (two examples) -->
+    <section class="background-wrapper">
+      <div class="split-color1"></div>
+      <div class="split-color2"></div>
+      <img src="https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/10/Paramporul-Masters-Website-Size-Nov-23.jpg" class="center-image" alt="center-1">
+    </section>
+
+    <section class="background-wrapper">
+      <div class="split-color1"></div>
+      <div class="split-color2"></div>
+      <img src="https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/10/Website-Pournami-Dec-4.jpg" class="center-image" alt="center-2">
+    </section>
+
+  </main>
+
+  <nav class="nav mt-3 mx-4" >
+    <h1 class="text-light bold">Exclusive Video Collection</h1>
+  </nav>
+
+  <div class="wheel-dots mt-4">
+  <div class="dot" data-i="0"></div>
+  <div class="dot" data-i="1"></div>
+  <div class="dot" data-i="2"></div>
+  <div class="dot" data-i="3"></div>
+  <div class="dot" data-i="4"></div>
+  <div class="dot" data-i="5"></div>
+  <div class="dot" data-i="6"></div>
+</div>
+
+
+  <!-- =====================
+       WHEEL SECTION (bottom)
+       ===================== -->
+  <section class="wheel-section" aria-label="Card wheel">
+    <div class="viewport" id="track"></div>
+  </section>
+
+  <!-- spacer so wheel isn't stuck to bottom -->
+  <div class="bottom-spacer"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ---------------------
+       Inline JS (merged)
+       --------------------- -->
+  <script>
+    // ---------- small UI niceties ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".fade-element").forEach((el, i) => {
+        setTimeout(() => el.classList.add("showing"), 120 * i);
+      });
+    });
+
+    // top-bar sliding texts
+    (function(){
+      const words = document.querySelectorAll(".top-bar p");
+      if(!words.length) return;
+      let index = 0;
+      let interval;
+
+      function startSliding() {
+        interval = setInterval(() => {
+          const current = words[index];
+          current.classList.remove("active");
+          current.classList.add("exit");
+          index = (index + 1) % words.length;
+          const next = words[index];
+          setTimeout(() => {
+            current.classList.remove("exit");
+            next.classList.add("active");
+          }, 600);
+        }, 2500);
+      }
+      function stopSliding() { clearInterval(interval); }
+      startSliding();
+      const topBar = document.querySelector(".top-bar");
+      topBar.addEventListener("mouseenter", stopSliding);
+      topBar.addEventListener("mouseleave", startSliding);
+    })();
+
+    // video controls + intersection observer for animation
+    (function(){
+      const video = document.getElementById("premiumVideo");
+      const overlay = document.getElementById("playOverlay");
+      if(video && overlay){
+        overlay.addEventListener("click", () => { overlay.classList.add("hide"); video.play(); });
+        video.addEventListener("click", () => { if(video.paused){ video.play(); overlay.classList.add("hide"); } else { video.pause(); overlay.classList.remove("hide"); } });
+        video.addEventListener("play", () => overlay.classList.add("hide"));
+        video.addEventListener("pause", () => overlay.classList.remove("hide"));
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const videoSection = document.querySelector('.video-anim');
+        if(videoSection){
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('show'); });
+          }, { threshold: 0.3 });
+          observer.observe(videoSection);
+        }
+      });
+    })();
+
+    // center images zoom + reflection on intersection
+    (function(){
+      document.addEventListener("DOMContentLoaded", () => {
+        const centerImages = document.querySelectorAll(".center-image");
+        if(!centerImages.length) return;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if(entry.isIntersecting){
+              entry.target.classList.add("show-effect");
+              setTimeout(()=> entry.target.classList.add("reflection"), 300);
+            } else {
+              entry.target.classList.remove("show-effect");
+              entry.target.classList.remove("reflection");
+            }
+          });
+        }, { threshold: 0.4 });
+        centerImages.forEach(img => observer.observe(img));
+      });
+    })();
+  </script>
+
+  <!-- =========================
+       3D Card Wheel code
+       kept in a DOMContentLoaded wrapper
+       ========================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+
+      /* ================= CONFIG ================ */
+      const RADIUS = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--radius')) || 420;
+      const CENTER_LIFT = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lift')) || 130;
+      const VISIBLE_RANGE = 3;
+      const EDGE_RESIST = 0.4;
+      const FRICTION = 0.92;
+      const MIN_VEL = 0.015;
+
+      /* ================ DOM BUILD ================ */
+      const track = document.getElementById("track");
+      let cards = [];
+
+      const CARD_DATA = [
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/11/Family-means-UNDERSTANDING-Thumbnail-Design-1-1270x720.jpg", title:"Love Fades Without Understanding – The Yogic Secret to a Peaceful Family!", desc:"Last Week-Newly Added!", btn:"Buy Now", bg:"#fff", link:"#"},
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/10/Paramporul-Masters-blackhole-class-1270x720.jpg", title:"Paramporul Masters — Blackhole Class", desc:"New", btn:"Buy Now", bg:"#fff", link:"#"},
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/10/Reduce-Stress-Thumbnail-Design-1270x720.jpg", title:"Reduce Stress — Mini Course", desc:"Popular", btn:"Buy Now", bg:"#fff", link:"#"},
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/10/Becomeing-Guru-Thumbnail-Design-1270x720.jpg", title:"Becoming Guru — Deep Practice", desc:"Hot", btn:"Buy Now", bg:"#fff", link:"#"},
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/10/DEEP-SECRETS-Thumbnail-Design-1270x720.jpg", title:"Deep Secrets", desc:"Exclusive", btn:"Buy Now", bg:"#fff", link:"#"},
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/09/Paramporul-Masters-Part-7-1270x720.jpg", title:"Masters Part 7", desc:"Part 7", btn:"Buy Now", bg:"#fff", link:"#"},
+        { img: "https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/09/SILENCE-Thumbnail-Design-1270x720.jpg", title:"Silence", desc:"Classic", btn:"Buy Now", bg:"#fff", link:"#"}
+      ];
+
+      // build cards
+      CARD_DATA.forEach((data, i)=>{
+        const el = document.createElement("div");
+        el.className = "card";
+        el.dataset.i = i;
+        el.style.background = data.bg;
+
+        el.innerHTML = `
+          <img src="${data.img}" alt="">
+          <div class="meta">
+            <h3 style="margin:0; font-size:13px; color:black;">${data.title}</h3>
+            <button style="margin-top:6px; width:60%; padding:3px; border:none; border-radius:3px; background:red; color:white; font-size:11px; font-weight:bold; cursor:pointer;">
+              ${data.desc}
+            </button>
+
+            <div class="price-row" aria-label="Price: was 1000, now 499" style="margin-top:8px;">
+              <span class="original-price" aria-hidden="true">₹1000</span>
+              <span class="sale-price">₹499</span>
+              <span class="badge-off" aria-hidden="true">50% OFF</span>
+            </div>
+
+            <a href="${data.link}" target="_blank">
+              <button style="width:100%; padding:10px; margin-top:8px; border:none; border-radius:10px; background:blue; color:#000; font-weight:bold; cursor:pointer;">
+                ${data.btn}
+              </button>
+            </a>
+          </div>
+        `;
+        track.appendChild(el);
+        cards.push(el);
+      });
+
+      /* ============== STATE ================= */
+      let center = 0;
+      let maxIndex = cards.length - 1;
+      let velocity = 0;
+      let dragging = false;
+      let pointerId = null;
+      let lastX = 0;
+
+      /* =============== RENDERING =============== */
+      function render(){
+        const computedRadius = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--radius')) || RADIUS;
+        const computedLift = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lift')) || CENTER_LIFT;
+
+        for(let i=0;i<cards.length;i++){
+          const el = cards[i];
+          const offset = i - center;
+
+          if(Math.abs(offset) > VISIBLE_RANGE + 0.8){
+            el.style.opacity = 0;
+            el.style.pointerEvents = "none";
+            continue;
+          }
+          el.style.opacity = 1;
+          el.style.pointerEvents = "auto";
+
+          const angle = offset * 24;
+          const rad = angle * Math.PI / 180;
+
+          const x = Math.sin(rad) * (computedRadius + 90);
+          const y = Math.cos(rad) * computedRadius;
+
+          const lift = computedLift * (1 - Math.min(1, Math.abs(offset)));
+          const scale = 1 + 0.25 * (1 - Math.min(1, Math.abs(offset)));
+          const rotateY = angle * -1.6;
+
+          // translateZ controlled by proximity to center for smoother depth
+          const tz = (1 - Math.min(1, Math.abs(offset))) * 120;
+
+          el.style.transform =
+            `translateX(${x}px) translateY(${-(y - computedRadius) - lift}px) translateZ(${tz}px) rotateY(${rotateY}deg) scale(${scale})`;
+
+          el.style.zIndex = 1000 - Math.round(Math.abs(offset) * 10);
+
+          if(Math.abs(offset) < 0.45) el.classList.add("front"); else el.classList.remove("front");
+        }
+      }
+
+      /* ======================= POINTER EVENTS ======================= */
+      track.addEventListener("pointerdown", e=>{
+        if(!e.target.closest(".card")) return;
+        dragging = true;
+        pointerId = e.pointerId;
+        track.setPointerCapture(pointerId);
+        lastX = e.clientX;
+        velocity = 0;
+        track.classList.add("grabbing");
+      });
+
+      window.addEventListener("pointermove", e=>{
+        if(!dragging || e.pointerId !== pointerId) return;
+        const dx = e.clientX - lastX;
+        lastX = e.clientX;
+
+        let delta = -dx / 210;
+        let newCenter = center + delta;
+
+        if(newCenter < 0){
+          const extra = -newCenter;
+          delta *= Math.max(0.15, 1 - extra*(1-EDGE_RESIST));
+          newCenter = center + delta;
+        }
+        if(newCenter > maxIndex){
+          const extra = newCenter - maxIndex;
+          delta *= Math.max(0.15, 1 - extra*(1-EDGE_RESIST));
+          newCenter = center + delta;
+        }
+
+        velocity = velocity * 0.5 + delta * 0.8;
+        center = newCenter;
+        render();
+      });
+
+      function endDrag(e){
+        if(!dragging || (e && e.pointerId !== pointerId)) return;
+        dragging = false;
+        try{ track.releasePointerCapture(pointerId); } catch(err){}
+        pointerId = null;
+        track.classList.remove("grabbing");
+      }
+      window.addEventListener("pointerup", endDrag);
+      window.addEventListener("pointercancel", endDrag);
+
+      /* ======================= MOMENTUM LOOP ======================= */
+      function loop(){
+        if(!dragging){
+          if(Math.abs(velocity) > MIN_VEL){
+            center += velocity;
+            velocity *= FRICTION;
+          } else {
+            velocity = 0;
+            const nearest = Math.round(center);
+            updateDots(nearest);
+            const diff = nearest - center;
+            if(Math.abs(diff) > 0.001){
+              center += diff * 0.18;
+              if(Math.abs(diff) < 0.01) center = nearest;
+            }
+          }
+
+          // bounds pulling
+          if(center < 0){
+            const pull = -center;
+            center += pull * 0.18;
+            velocity *= 0.6;
+            if(pull < 0.001) center = 0;
+          }
+          if(center > maxIndex){
+            const pull = maxIndex - center;
+            center += pull * 0.18;
+            velocity *= 0.6;
+            if(Math.abs(pull) < 0.001) center = maxIndex;
+          }
+          render();
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      /* CLICK SNAP */
+      track.addEventListener("click", (e)=>{
+        const c = e.target.closest(".card");
+        if(!c) return;
+        const i = Number(c.dataset.i);
+        if(Math.abs(i - center) > 0.2) velocity = (i - center) * 0.25;
+      });
+
+      /* Init render */
+      render();
+
+      // Resize: recalc render so CSS variable changes update layout immediately
+      window.addEventListener('resize', render);
+    });
+
+    function updateDots(activeIndex) {
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((dot, i) => {
+    if (i === activeIndex) {
+      dot.classList.add("active");
+    } else {
+      dot.classList.remove("active");
+    }
+  });
+}
+
+
+const wheelSection = document.querySelector(".wheel-section");
+const track = document.getElementById("track");
+const cardsList = document.querySelectorAll(".card");
+
+window.addEventListener("scroll", () => {
+  const rect = wheelSection.getBoundingClientRect();
+
+  // When section becomes visible
+  if (rect.top < window.innerHeight - 100) {
+
+    // Fade + Slide-in section
+    wheelSection.classList.add("visible");
+
+    // Zoom-in effect for the wheel
+    track.classList.add("zoom-in");
+
+    // Staggered fade-in for cards
+    cardsList.forEach((card, i) => {
+      setTimeout(() => card.classList.add("show"), i * 120);
+    });
+  }
+});
+
+
+
+</script>
+
+<div class="container-fluid text-light py-5" id="about">
+  <div class="row align-items-center p-3">
+    <!-- Text Column -->
+    <div class="col-md-6 p-4 fw-bold py3">
+      <p class="py-2">
+        Born into a family of surfers, my passion for the ocean started at an early age. With my father as a surfing instructor and my brother also a professional surfer, I grew up riding waves along Morocco’s stunning coastline. Both of them taught me so much, and thanks to their guidance, I developed strong skills and a deep love for the sport. Over the years, I’ve competed, refined my technique, and shared my knowledge with surfers from around the world.
+      </p>
+      <p class="py-2">
+        For the past five years, I’ve been teaching professionally in the Tamraght/Taghazout region, helping everyone from first-time surfers to advanced riders reach their full potential.
+      </p>
+      <p class="py-2">
+        Knowing all the best surf spots in the area, I also offer surf-guiding to help you score the best waves based on your level and conditions. Safety and fun are my top priorities. If you’re a beginner, I ensure you feel comfortable and confident while making the most of every wave. If you’re an advanced surfer, together we’ll choose what to focus on and will polish your technique while also having lots of fun.
+      </p>
+      <p class="py-2">
+        No matter your level, my goal is to help you progress, build confidence, and enjoy the thrill of surfing in Morocco.
+      </p>
+      <button type="button" class="btn btn-primary btn-lg btn-underline">
+  Explore More
+</button>
+
+    </div>
+
+    <!-- Image Column -->
+    <div class="col-md-6 p-4 text-center py-3">
+      <img 
+        class="img-fluid rounded-5 shadow" 
+        src="https://bunny-wp-pullzone-walceftkyh.b-cdn.net/wp-content/uploads/2025/08/mahavishnu-home-3.png" 
+        alt="Surf Instructor">
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container-fluid text-light py-5" id="about1">
+  <p class="text-primary py-3 px-5 fw-bold">___ About US</p>
+  <div class="row align-items-center p-3">
+        <!-- Image Column -->
+    <div class="col-md-6 p-4 text-center py-3">
+      <img 
+        class="img-fluid rounded-5 shadow" 
+        src="https://oussamasurfadventure.com/wp-content/uploads/2025/03/logo.png" 
+        alt="Surf Instructor">
+    </div>
+    <!-- Text Column -->
+    <div class="col-md-6 p-4 fw-bold py3">
+      <p class="py-2">
+        Born into a family of surfers, my passion for the ocean started at an early age. With my father as a surfing instructor and my brother also a professional surfer, I grew up riding waves along Morocco’s stunning coastline. Both of them taught me so much, and thanks to their guidance, I developed strong skills and a deep love for the sport. Over the years, I’ve competed, refined my technique, and shared my knowledge with surfers from around the world.
+      </p>
+      <p class="py-2">
+        For the past five years, I’ve been teaching professionally in the Tamraght/Taghazout region, helping everyone from first-time surfers to advanced riders reach their full potential.
+      </p>
+      <p class="py-2">
+        Knowing all the best surf spots in the area, I also offer surf-guiding to help you score the best waves based on your level and conditions. Safety and fun are my top priorities. If you’re a beginner, I ensure you feel comfortable and confident while making the most of every wave. If you’re an advanced surfer, together we’ll choose what to focus on and will polish your technique while also having lots of fun.
+      </p>
+      <p class="py-2">
+        No matter your level, my goal is to help you progress, build confidence, and enjoy the thrill of surfing in Morocco.
+      </p>
+      <button type="button" class="btn btn-primary btn-lg btn-underline">
+  Explore More
+</button>
+
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="about-card1" id="aboutCard">
+    <div class="profile-header">
+      <img src="c:\Users\HP\Downloads\ChatGPT Image Oct 18, 2025, 03_36_56 PM.png" alt="Vignesh S">
+      <h3>Vignesh S</h3>
+    </div>
+
+    <ul class="info-list">
+      <li><span>Name:</span><span>Vignesh S</span></li>
+      <li><span>DOB:</span><span>05-Mar-1998</span></li>
+      <li><span>Location:</span><span>Chennai, Tamil Nadu</span></li>
+      <li><span>Pincode:</span><span>600113</span></li>
+      <li><span>Email:</span><span>vignesh3377@gmail.com</span></li>
+      <li><span>Mobile No:</span><span>7299975144</span></li>
+    </ul>
+
+    <div class="social-links">
+      <a href="#"><i class="bi bi-github"></i></a>
+      <a href="#"><i class="bi bi-linkedin"></i></a>
+      <a href="#"><i class="bi bi-instagram"></i></a>
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-custom">Contact Me</button>
+    </div>
+  </div>
+
+
+
+  <script>
+  const aboutCard = document.getElementById('aboutCard');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        aboutCard.classList.add('animate');
+        observer.unobserve(aboutCard); // optional: run only once
+      }
+    });
+  }, { threshold: 0.5 }); // trigger when 50% of the card is visible
+
+  observer.observe(aboutCard);
+
+</script>
+
+</body>
+</html>
+
+
+
+
