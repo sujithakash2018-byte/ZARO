@@ -1,0 +1,115 @@
+*{
+    margin: 0%;
+}
+
+
+.one{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    }
+ul,li,h1{
+    display: inline;
+}
+ul{
+    margin-left: 60%;
+    color: gray;
+}
+li:hover{
+    color: white;
+    cursor: pointer;
+}
+input{
+    width: 700px;
+    margin-left: 50%;
+    
+}
+#one{
+    margin-top: 20px;
+}
+#two{
+    margin-top: 50px;
+}
+.three{
+    
+}
+
+.three{
+    border-width: 3px;
+    border-color: black;
+    border-style: solid; 
+    max-width:min-content ;
+    margin-left: 25%;
+    display: inline-block;
+}
+
+.four{
+        border-width: 3px;
+    border-color: black;
+    border-style: solid; 
+    max-width:min-content ;
+    margin-left: 1px;
+    display: inline-block;
+}
+.five{
+    border-color: black;
+    border-width:3px ;
+    max-width: min-content;
+    border-style: solid;
+    margin-left: 1px;
+    display: inline-block;
+}
+nav{
+    cursor: pointer;
+    
+}
+a{
+    color: gray;
+}
+a:hover{
+    color: white;
+}
+.five:hover{
+    background-color: black;
+    color: white;
+}
+.four:hover{
+    background-color: black;
+    color: white;
+}
+.three:hover{
+    background-color: black;
+    color: white;
+}
+.seven{
+    margin-top: 40px;
+}
+.six{
+    text-align: center;
+}
+.eight{
+    margin: 20px;
+}
+p{
+    margin-right: 10%;
+
+    margin-left: 10%; 
+}
+.nine{
+    margin-top: 10px;
+}
+.ten{
+    color: white;
+    background-color: black;
+    padding-left: 50%;
+    text-align: center;
+    
+}
+.eleven{
+    background-color: black;
+color: gray;
+}
+.twele{
+background-color:black;
+padding-top: 10px;
+}
